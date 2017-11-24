@@ -21,11 +21,19 @@ namespace SmartCars.PageObjects
             new SelectElement(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-models')]//select"));
         private readonly SelectElement _selectYear =
             new SelectElement(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-years')]//select"));
-        private  readonly  Button _btnSubmit = new Button(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-submit')]//input[@type='submit']"));
+        private  readonly  Button _btnSubmit = 
+            new Button(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-submit')]//input[@type='submit']"));
+        private readonly Button _btnCompareCars =
+            new Button(By.XPath("//div[@id='ta-linkcards-container']//a[contains(@data-link-name,'compare-cars')]"), "btnCompareCars");
 
         public ResearchPage()
         {
             Assert.True(IsTruePage(_btnResearchPage.GetLocator()), "This is not ResearchPage");
+        }
+
+        public void NavigateToCompareCarsPage()
+        {
+            _btnCompareCars.ClickAndWait();
         }
 
         public Car SearchRandomCar()

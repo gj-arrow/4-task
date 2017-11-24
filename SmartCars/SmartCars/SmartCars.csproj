@@ -59,6 +59,7 @@
     <Compile Include="Entities\Car.cs" />
     <Compile Include="Entities\CharacteristicsCar.cs" />
     <Compile Include="PageObjects\CarInfoPage.cs" />
+    <Compile Include="PageObjects\CompareCarsPage.cs" />
     <Compile Include="PageObjects\HomePage.cs" />
     <Compile Include="PageObjects\ResearchPage.cs" />
     <Compile Include="PageObjects\TrimComparisonPage.cs" />

@@ -11,7 +11,7 @@ namespace SmartCars.Entities
         private readonly string _engine;
         private readonly string _transmission;
 
-        public string GetEngine
+        public string Engine
         {
             get
             {
@@ -19,7 +19,7 @@ namespace SmartCars.Entities
             }
         }
 
-        public string GetTransmission
+        public string Transmission
         {
             get
             {
@@ -31,6 +31,12 @@ namespace SmartCars.Entities
         {
             _engine = engine;
             _transmission = transmission;
+        }
+
+        public static bool Equals(CharacteristicsCar expectedCharacteristicsCar, CharacteristicsCar actualCharacteristicsCar)
+        {
+            return expectedCharacteristicsCar.Engine == actualCharacteristicsCar.Engine 
+                && expectedCharacteristicsCar.Transmission == actualCharacteristicsCar.Transmission;
         }
     }
 }

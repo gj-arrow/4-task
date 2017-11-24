@@ -8,19 +8,19 @@ namespace SmartCars.Entities
 {
     public class Car
     {
-        private readonly string _car;
+        private readonly string _make;
         private readonly string _model;
         private readonly string _year;
 
-        public string GetCar
+        public string Make
         {
             get
             {
-                return _car;
+                return _make;
             }
         }
-
-        public string GetModel
+    
+        public string Model
         {
             get
             {
@@ -28,7 +28,7 @@ namespace SmartCars.Entities
             }
         }
 
-        public string GetYear
+        public string Year
         {
             get
             {
@@ -36,17 +36,17 @@ namespace SmartCars.Entities
             }
         }
 
-        public Car(string car, string model, string year)
+        public Car(string make, string model, string year)
         {
-            _car = car;
+            _make = make;
             _model = model;
             _year = year;
         }
 
         public static bool Equals(Car expectedCar, Car actualCar)
         {
-            return expectedCar.GetCar == actualCar.GetCar && expectedCar.GetModel == actualCar.GetModel
-                   && expectedCar.GetYear == actualCar.GetYear;
+            return expectedCar.Make == actualCar.Make && expectedCar.Model == actualCar.Model
+                   && expectedCar.Year == actualCar.Year;
         }
     }
 }
