@@ -83,5 +83,30 @@ namespace SmartCars.TestSmartCars
                 + characteristicExpectedCar2.Engine + "||||" + characteristicCarActual2.Engine + "      " +
                 characteristicExpectedCar2.Transmission + "||||" + characteristicCarActual2.Transmission);
         }
+
+
+
+        [Test]
+        public void AutoTest()
+        {
+            var flag1 = false;
+            var homePage = new HomePage();
+            while (!flag1)
+            {
+                homePage.NavigateToHome();
+                homePage.NavigateToResearchPage();
+
+                var researchPage = new ResearchPage();
+                carExpected1 = researchPage.SearchCarTest();
+
+                var carInfoPage = new CarInfoPage();
+                flag1 = carInfoPage.NavigateToCarCharacteristics();
+            }
+            trimComparisonPage = new TrimComparisonPage();
+            carActual1 = trimComparisonPage.GetConfigurationCar();
+            Assert.True(Car.Equals(carExpected1, carActual1), "Cars don't match");
+            var characteristicExpectedCar1 = trimComparisonPage.SaveCharacteristicsCar();
+            homePage.NavigateToHome();
+        }
     }
 }

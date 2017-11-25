@@ -6,12 +6,10 @@ namespace Framework.Elements
     {
         public Element(By locator) : base (locator)
         {
-            WaitUntilDisplayed();
         }
 
         public Element(By locator, string name) : base(locator, name)
         {
-            WaitUntilDisplayed();
         }
     }
 }

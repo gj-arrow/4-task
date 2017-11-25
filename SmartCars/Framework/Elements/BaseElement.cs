@@ -38,7 +38,6 @@ namespace Framework.Elements
 
         public By GetLocator()
         {
-            WaitUntilDisplayed();
             return Locator; 
         }
 

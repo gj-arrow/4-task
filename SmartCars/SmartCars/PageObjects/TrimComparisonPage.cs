@@ -14,13 +14,12 @@ namespace SmartCars.PageObjects
     {
         private readonly Label _lblTrimComparisonPage =
             new Label(By.XPath("//div[contains(@class,'trim-header__title')]//h1[contains(text(),'Configurations')]"), "lblCarInfoPage");
-        private readonly Label _lblEngine = new Label(By.XPath("//div[contains(@class,'trim-card')][2]//div[4]"));
-        private readonly Label _lblTransmission = new Label(By.XPath("//div[contains(@class,'trim-card')][2]//div[5]"));
-        private readonly Button _btnCar = new Button(By.XPath("//a[contains(@data-linkname,'bc-Make')]"));
-        private readonly Button _btnModel = new Button(By.XPath("//a[contains(@data-linkname,'bc-Model')]"));
+        private readonly Label _lblEngine = new Label(By.XPath("//div[contains(@class,'trim-card')][2]//div[4]"), "lblEngine");
+        private readonly Label _lblTransmission = new Label(By.XPath("//div[contains(@class,'trim-card')][2]//div[5]"), "lblTransmission");
+        private readonly Label _btnMake = new Label(By.XPath("//a[contains(@data-linkname,'bc-Make')]"), "btnMake");
+        private readonly Label _btnModel = new Label(By.XPath("//a[contains(@data-linkname,'bc-Model')]"), "btnModel");
         private readonly Button _btnResearch =
             new Button(By.XPath("//ul[contains(@class,'global-nav__menu')]//a[contains(text(),'Research')]"), "btnResearch");
-
 
         public TrimComparisonPage()
         {
@@ -37,7 +36,7 @@ namespace SmartCars.PageObjects
             if (_lblTrimComparisonPage.IsExistOnPage())
             {
                 var configurationCar = _lblTrimComparisonPage.GetText().Split(' ');
-                var car = new Car(_btnCar.GetText(), _btnModel.GetText(), configurationCar[0]);
+                var car = new Car(_btnMake.GetText(), _btnModel.GetText(), configurationCar[0]);
                 return car;
             }
             return null;
@@ -45,7 +44,8 @@ namespace SmartCars.PageObjects
 
         public CharacteristicsCar SaveCharacteristicsCar()
         {
-            var characteristicCar = new CharacteristicsCar(_lblEngine.GetText().Replace("liter", "L"), _lblTransmission.GetText().Replace("spd", "speed"));
+            var characteristicCar = 
+                new CharacteristicsCar(_lblEngine.GetText().Replace("liter", "L"), _lblTransmission.GetText().Replace("spd", "speed"));
             return characteristicCar;
         }
     }

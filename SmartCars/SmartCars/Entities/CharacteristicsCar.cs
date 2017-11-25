@@ -8,35 +8,19 @@ namespace SmartCars.Entities
 {
     public class CharacteristicsCar
     {
-        private readonly string _engine;
-        private readonly string _transmission;
-
-        public string Engine
-        {
-            get
-            {
-                return _engine;
-            }
-        }
-
-        public string Transmission
-        {
-            get
-            {
-                return _transmission;
-            }
-        }
+        public string Engine { get; private set; }
+        public string Transmission { get; private set; }
 
         public CharacteristicsCar(string engine, string transmission)
         {
-            _engine = engine;
-            _transmission = transmission;
+            Engine = engine;
+            Transmission = transmission;
         }
 
         public static bool Equals(CharacteristicsCar expectedCharacteristicsCar, CharacteristicsCar actualCharacteristicsCar)
         {
-            return expectedCharacteristicsCar.Engine == actualCharacteristicsCar.Engine 
-                && expectedCharacteristicsCar.Transmission == actualCharacteristicsCar.Transmission;
+            return actualCharacteristicsCar.Engine.Contains(expectedCharacteristicsCar.Engine)
+                && actualCharacteristicsCar.Transmission.Contains(expectedCharacteristicsCar.Transmission);
         }
     }
 }
