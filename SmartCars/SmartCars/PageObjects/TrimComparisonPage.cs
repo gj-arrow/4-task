@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Framework;
 using Framework.Elements;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -23,7 +24,7 @@ namespace SmartCars.PageObjects
 
         public TrimComparisonPage()
         {
-            Assert.True(Browser.Driver.Url.EndsWith("trims/"));
+            Assert.True(Browser.GetUrl().EndsWith("trims/"), "This is not TrimComprasionPage");
         }
 
         public void NavigateToResearchPage()

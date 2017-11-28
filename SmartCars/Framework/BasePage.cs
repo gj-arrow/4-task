@@ -1,27 +1,26 @@
 ﻿using System;
 using Framework.BrowserManager;
-using OpenQA.Selenium;
 
-namespace Framework.Elements
+namespace Framework
 {
     public abstract class BasePage
     {
-        protected BrowserFactory Browser;
+        protected Browser Browser;
 
         protected BasePage()
         {
-            Browser = BrowserFactory.GetInstance();
+            Browser = Browser.GetInstance();
         }
 
-        protected bool IsTruePage(By locator)
+        protected bool IsTruePage(BaseElement element)
         {
             try
             {
-                Browser.Driver.FindElement(locator);
+                element.IsExistOnPage();
             }
             catch (Exception e)
             {
-                Console.WriteLine("This is wrong page." + e.Message);
+                Console.WriteLine("The expected page was not displayed." + e.Message);
                 return false;
             }
             return true;

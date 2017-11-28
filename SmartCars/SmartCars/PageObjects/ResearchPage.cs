@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Framework;
 using Framework.Elements;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using SmartCars.Entities;
-using SmartCars.Utils;
+using SmartCars.Services;
 
 namespace SmartCars.PageObjects 
 {
@@ -28,7 +29,7 @@ namespace SmartCars.PageObjects
 
         public ResearchPage()
         {
-            Assert.True(IsTruePage(_btnResearchPage.GetLocator()), "This is not ResearchPage");
+            Assert.True(IsTruePage(_btnResearchPage), "This is not ResearchPage");
         }
 
         public void NavigateToCompareCarsPage()
@@ -36,28 +37,21 @@ namespace SmartCars.PageObjects
             _btnCompareCars.ClickAndWait();
         }
 
-        public Car SearchRandomCar()
+        public Car SelectRandomCar()
         {
             var cars = _selectCar.Options();
-            _selectCar.SelectValue(RandomUtil.RandomValue(cars));
+            _selectCar.SelectValue(RandomService.RandomValue(cars));
             var models = _selectModel.Options();
-            _selectModel.SelectValue(RandomUtil.RandomValue(models));
+            _selectModel.SelectValue(RandomService.RandomValue(models));
             var years = _selectYear.Options();
-            _selectYear.SelectValue(RandomUtil.RandomValue(years));
+            _selectYear.SelectValue(RandomService.RandomValue(years));
             var car = new Car(_selectCar.SelectedOption(), _selectModel.SelectedOption(), _selectYear.SelectedOption());
-            _btnSubmit.ClickAndWait();
             return car;
         }
 
-
-        public Car SearchCarTest()
+        public void ClickSearchButton()
         {
-            _selectCar.SelectValue("International");
-            _selectModel.SelectValue("MXT");
-            _selectYear.SelectValue("2008");
-            var car = new Car(_selectCar.SelectedOption(), _selectModel.SelectedOption(), _selectYear.SelectedOption());
             _btnSubmit.ClickAndWait();
-            return car;
         }
     }
 }

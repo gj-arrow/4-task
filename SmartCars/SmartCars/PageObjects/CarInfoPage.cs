@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Framework;
 using Framework.Elements;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using SmartCars.Entities;
-using SmartCars.Utils;
 
 namespace SmartCars.PageObjects
 {
@@ -20,21 +20,32 @@ namespace SmartCars.PageObjects
             new Label(By.XPath("//div[@id='mmy-trims']//a[contains(text(),'trim comparison')]"), "lblTrimComparsion");
         private readonly Button _btnTrims =
             new Button(By.XPath("//div[contains(@class,'cui-page-container')]//div[contains(@class,'menu-parent')]//a[contains(text(),'Trims')]"));
+        private readonly Button _btnResearch =
+            new Button(By.XPath("//ul[contains(@class,'global-nav__menu')]//a[contains(text(),'Research')]"), "btnResearch");
 
         public CarInfoPage()
         {
-            Assert.True(IsTruePage(_lblCarInfoPage.GetLocator()), "This is not CarInfoPage");
+            Assert.True(IsTruePage(_lblCarInfoPage), "This is not CarInfoPage");
         }
 
-        public bool NavigateToCarCharacteristics()
+        public bool IsButtonExists()
         {
             if (_lblTrimComparison.IsExistOnPage())
             {
-                _btnTrims.Click();
-                _lblTrimComparison.ClickAndWait();
                 return true;
             }
-            return  false;
+            return false;
+        }
+
+        public void NavigateToResearchPage()
+        {
+            _btnResearch.ClickAndWait();
+        }
+
+        public void NavigateToCarCharacteristics()
+        {
+            _btnTrims.Click();
+            _lblTrimComparison.ClickAndWait();
         }
     }
 }

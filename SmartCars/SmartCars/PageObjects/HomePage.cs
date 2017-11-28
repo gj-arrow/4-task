@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Framework;
 using Framework.Configurations;
 using OpenQA.Selenium;
 using Framework.Elements;
@@ -16,12 +17,12 @@ namespace SmartCars.PageObjects
             new Button(By.XPath("//ul[contains(@class,'global-nav__menu')]//a[contains(text(),'Research')]"), "btnResearch");
 
         public HomePage() {
-            Assert.True(IsTruePage(_btnHomePage.GetLocator()), "This is not HomePage");
+            Assert.True(IsTruePage(_btnHomePage), "This is not HomePage");
         }
 
         public void NavigateToHome()
         {
-            Browser.Driver.Navigate().GoToUrl(Config.Url);
+            Browser.GoToUrl(Config.Url);
         }
 
         public void NavigateToResearchPage()

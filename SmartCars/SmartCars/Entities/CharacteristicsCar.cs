@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartCars.Entities
+﻿namespace SmartCars.Entities
 {
     public class CharacteristicsCar
     {
@@ -17,10 +11,24 @@ namespace SmartCars.Entities
             Transmission = transmission;
         }
 
-        public static bool Equals(CharacteristicsCar expectedCharacteristicsCar, CharacteristicsCar actualCharacteristicsCar)
+        public override string ToString()
         {
-            return actualCharacteristicsCar.Engine.Contains(expectedCharacteristicsCar.Engine)
-                && actualCharacteristicsCar.Transmission.Contains(expectedCharacteristicsCar.Transmission);
+            return Engine + ", " + Transmission;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj == this) return true;
+            var carCharacteristics = obj as CharacteristicsCar;
+            return carCharacteristics != null && Equals(carCharacteristics);
+        }
+
+        protected bool Equals(CharacteristicsCar carCharacteristics)
+        {
+            return carCharacteristics.Engine.Contains(Engine)
+                   && carCharacteristics.Transmission.Contains(Transmission);
+        }
+
     }
 }

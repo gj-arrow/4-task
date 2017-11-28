@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SmartCars.Utils
+namespace SmartCars.Services
 {
-    public static class RandomUtil
+    public static class RandomService
     {
         private static readonly Random Random = new Random();
 
