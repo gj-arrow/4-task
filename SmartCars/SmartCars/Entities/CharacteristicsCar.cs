@@ -6,16 +6,16 @@
         public string Engine { get; private set; }
         public string Transmission { get; private set; }
 
-        public CharacteristicsCar(string engine, string transmission)
-        {
-            Engine = engine;
-            Transmission = transmission;
-        }
-
         public CharacteristicsCar()
         {
             Engine = "";
             Transmission = "";
+        }
+
+        public CharacteristicsCar(string engine, string transmission)
+        {
+            Engine = engine;
+            Transmission = transmission;
         }
 
         public override string ToString()

@@ -15,7 +15,7 @@ namespace SmartCars.Elements
 
         public void NavigateToMenuItem(string topLevelMenuItem)
         {
-            _lblMenuItem = new Label(By.XPath(string.Format(TemplateMenuLocator, topLevelMenuItem)), "lblMainMenuItem");
+            _lblMenuItem = new Label(By.XPath(string.Format(TemplateMenuLocator, topLevelMenuItem)), "Label MainMenuItem");
             _lblMenuItem.ClickAndWait();
         }
     }

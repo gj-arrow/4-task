@@ -19,7 +19,7 @@ namespace Framework.Elements
             _select = new UISelectElement(Element);
         }
 
-        public List<string> Options ()
+        public List<string> Options()
         {
             var optionsString = new List<string>();
             foreach (var option in _select.Options)
