@@ -2,6 +2,7 @@
 {
     public class CharacteristicsCar
     {
+        private const char Separator = ',';
         public string Engine { get; private set; }
         public string Transmission { get; private set; }
 
@@ -11,24 +12,30 @@
             Transmission = transmission;
         }
 
+        public CharacteristicsCar()
+        {
+            Engine = "";
+            Transmission = "";
+        }
+
         public override string ToString()
         {
-            return Engine + ", " + Transmission;
+            return Engine + Separator + 
+                   Transmission;
         }
 
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
             if (obj == this) return true;
-            var carCharacteristics = obj as CharacteristicsCar;
-            return carCharacteristics != null && Equals(carCharacteristics);
+            var characteristicsCar = obj as CharacteristicsCar;
+            return characteristicsCar != null && Equals(characteristicsCar);
         }
 
-        protected bool Equals(CharacteristicsCar carCharacteristics)
+        protected bool Equals(CharacteristicsCar characteristicsCar)
         {
-            return carCharacteristics.Engine.Contains(Engine)
-                   && carCharacteristics.Transmission.Contains(Transmission);
+            return characteristicsCar.Engine.Contains(Engine)
+                   && characteristicsCar.Transmission.Contains(Transmission);
         }
-
     }
 }

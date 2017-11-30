@@ -6,7 +6,7 @@ namespace Framework.Elements
 {
     public class SelectElement : BaseElement
     {
-        private UISelectElement _select;
+        private readonly UISelectElement _select;
         public SelectElement(By locator) : base (locator)
         {
             WaitUntilDisplayed();
@@ -21,7 +21,7 @@ namespace Framework.Elements
 
         public List<string> Options ()
         {
-            List<string> optionsString = new List<string>();
+            var optionsString = new List<string>();
             foreach (var option in _select.Options)
             {
                 optionsString.Add(option.Text);

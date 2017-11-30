@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Framework;
 using Framework.Elements;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using SmartCars.Entities;
-using SmartCars.Services;
 
 namespace SmartCars.PageObjects 
 {
-    public class ResearchPage : BasePage
+    public class ResearchPage : CarsBaseForm
     {
+        private static readonly Random Random = new Random();
+        private const int StartIndex = 1;
+        private const string TemplateSelectLocator = "//section[@id='research-search-widget']//div[contains(@class,'{0}')]//select";
         private readonly Label _btnResearchPage =
-            new Label(By.XPath("//section[@id='research-browseby']/h2[contains(text(),'Research')]"), "lblResearchPage");
+            new Label(By.XPath("//section[@id='research-browseby']/h2[contains(text(),'Research')]"), "Label ResearchPage");
         private  readonly  SelectElement _selectCar = 
-            new SelectElement(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-makes')]//select"), "selectMake");
+            new SelectElement(By.XPath(string.Format(TemplateSelectLocator, "hsw-make")), "selectMake");
         private readonly SelectElement _selectModel =
-            new SelectElement(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-models')]//select"), "selectModel");
+            new SelectElement(By.XPath(string.Format(TemplateSelectLocator, "hsw-model")), "selectModel");
         private readonly SelectElement _selectYear =
-            new SelectElement(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-years')]//select"), "selectYear");
-        private  readonly  Button _btnSubmit = 
-            new Button(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-submit')]//input[@type='submit']"), "btnSubmit");
+            new SelectElement(By.XPath(string.Format(TemplateSelectLocator, "hsw-year")), "selectYear");
+        private  readonly  Button _btnSearch = 
+            new Button(By.XPath("//section[@id='research-search-widget']//div[contains(@class,'hsw-submit')]//input[@type='submit']"), "Button Submit");
         private readonly Button _btnCompareCars =
-            new Button(By.XPath("//div[@id='ta-linkcards-container']//a[contains(@data-link-name,'compare-cars')]"), "btnCompareCars");
+            new Button(By.XPath("//div[@id='ta-linkcards-container']//a[contains(@data-link-name,'compare-cars')]"), "Button CompareCars");
 
         public ResearchPage()
         {
@@ -37,21 +35,31 @@ namespace SmartCars.PageObjects
             _btnCompareCars.ClickAndWait();
         }
 
-        public Car SelectRandomCar()
+        public void SelectRandomCar()
         {
             var cars = _selectCar.Options();
-            _selectCar.SelectValue(RandomService.RandomValue(cars));
+            _selectCar.SelectValue(RandomValue(cars));
             var models = _selectModel.Options();
-            _selectModel.SelectValue(RandomService.RandomValue(models));
+            _selectModel.SelectValue(RandomValue(models));
             var years = _selectYear.Options();
-            _selectYear.SelectValue(RandomService.RandomValue(years));
+            _selectYear.SelectValue(RandomValue(years));
+        }
+
+        public Car GetCarInfo()
+        {
             var car = new Car(_selectCar.SelectedOption(), _selectModel.SelectedOption(), _selectYear.SelectedOption());
             return car;
         }
 
+        private static string RandomValue(List<string> options)
+        {
+            var randomIndex = Random.Next(StartIndex, options.Count);
+            return options[randomIndex];
+        }
+
         public void ClickSearchButton()
         {
-            _btnSubmit.ClickAndWait();
+            _btnSearch.ClickAndWait();
         }
     }
 }

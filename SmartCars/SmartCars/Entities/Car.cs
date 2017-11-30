@@ -2,21 +2,17 @@
 {
     public class Car
     {
-        public string Make { get;  set; }
-        public string Model { get; private set; }
-        public string Year { get; private set; }
+        private const char Separator = ',';
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public CharacteristicsCar CharacteristicsCar = new CharacteristicsCar();
 
         public Car(string make, string model, string year)
         {
             Make = make;
             Model = model;
             Year = year;
-        }
-
-        public static bool Equals(Car expectedCar, Car actualCar)
-        {
-            return expectedCar.Make == actualCar.Make && expectedCar.Model == actualCar.Model
-                   && expectedCar.Year == actualCar.Year;
         }
 
         public override bool Equals(object obj)
@@ -31,12 +27,16 @@
         {
             return Make.Equals(car.Make)
                    && Model.Equals(car.Model)
-                   && Year.Equals(car.Year);
+                   && Year.Equals(car.Year)
+                   && CharacteristicsCar.Equals(car.CharacteristicsCar);
         }
 
         public override string ToString()
-        { 
-            return Make + ", " + Model + ", " + Year;
+        {
+            return Make + Separator +
+                   Model + Separator +
+                   Year + Separator +
+                   CharacteristicsCar;
         }
     }
 }

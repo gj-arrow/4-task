@@ -1,25 +1,36 @@
 ﻿Feature: Cars
 
 Scenario: ComparisonOfTwoCars
-	Given User navigate to cars.com
-	
-	When Navigate to Research
-		And Select random car 
+	Given User navigate to cars.com	
+		And Navigate to 'Research' page
+		And Select random car
+	When Save expected info about car
 		And Click Search button
-		And Click first trim
-		And Take info about car
-	Then Is right charachteristics car 0
+		And Click Menu 'Trims'
+		And Click Trim comparison button
+		And Save actual info about car
+	Then Expected and actual car 0 must match
+		And Save expected characteristics car 0
 
-	When Take info about engine and transmission 
-		And Navigate to Research
-		And Select random car 
+	Given Navigate to 'Research' page
+		And Select random car
+	When Save expected info about car
 		And Click Search button
-		And Click first trim
-		And Take info about car 
-	Then Is right charachteristics car 1
+		And Click Menu 'Trims'
+		And Click Trim comparison button
+		And Save actual info about car
+	Then Expected and actual car 1 must match
+		And Save expected characteristics car 1
 
-	When Take info about engine and transmission 
-		And Navigate to Compare cars
-		And Add first car for compare
-		And Add second car for compare 
-	Then Is right are selected cars charachteristics
+	Given Navigate to Compare cars page
+	When Select car 0 
+		And Add car 0 for compare
+		And Take actual car 0 
+
+		And Click button Add another car
+		And Select car 1  
+		And Add car 1 for compare 
+		And Take actual car 1 
+
+	Then Expected and actual car 0 must match
+		And Expected and actual car 1 must match

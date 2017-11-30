@@ -1,5 +1,4 @@
 ﻿using System;
-using Framework.Configurations;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 

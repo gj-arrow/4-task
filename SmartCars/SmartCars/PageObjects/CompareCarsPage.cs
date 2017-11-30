@@ -1,85 +1,91 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Framework;
-using Framework.Configurations;
 using Framework.Elements;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using SmartCars.Elements;
 using SmartCars.Entities;
-using SmartCars.Services;
+
 namespace SmartCars.PageObjects
 {
-    public class CompareCarsPage : BasePage
-    {      
-        private const string RegularExpression = "index\">([a-zA-Z0-9-\\/,.() ]+)";
-       // private Label _lblEngine2, _lblTansmision2;
+    public class CompareCarsPage : CarsBaseForm
+    {
+        private const int MatchGroup = 1;
+        private const int NumberFirstCar = 0;
+        private const string OldValueReplace = "liter";
+        private const string NewValueReplace = "L";
+        private const string Engine = "Engine", Transmission = "Transmission";
+        private const string RegularExpression = "index\">([a-zA-Z0-9-\\/,.(); ]+)";
         private readonly BaseElement _btnAddCar = new BaseElement(By.XPath("//div[@id='icon-div']"), "Add Car button");
         private readonly Label _lblompareCarPage =
             new Label(By.XPath("//div[contains(@class,'side-by-side-head-text')]//h1[contains(text(),'Compare Cars')]"), "btnCompareCarsPage");
-        private readonly SelectElement _selectMake = new SelectElement(By.Id("make-dropdown"), "selectMake");
-        private readonly SelectElement _selectModel = new SelectElement(By.Id("model-dropdown"), "selectModel");
-        private readonly SelectElement _selectYear = new SelectElement(By.Id("year-dropdown"), "selectYear");
+        private  SelectElement _selectMake = new SelectElement(By.Id("make-dropdown"), "selectMake");
+        private  SelectElement _selectModel = new SelectElement(By.Id("model-dropdown"), "selectModel");
+        private  SelectElement _selectYear = new SelectElement(By.Id("year-dropdown"), "selectYear");
         private readonly Button _btnDone = new Button(By.XPath("//button[contains(text(),'Done')]"), "btnDone");
         private readonly Button _btnStartCompare =
-            new Button(By.XPath("//form[@id='mainAddCarForm']//button[contains(@class, 'done-button')]"),
-                "btnStartCompare");
+            new Button(By.XPath("//form[@id='mainAddCarForm']//button[contains(@class, 'done-button')]"), "btnStartCompare");
         private const string TemplateLocatorForEngineAndTransmission = "//cars-compare-compare-info[contains(@header,'{0}')]//span[@index={1}]";
-        private readonly Table _tblEngine =
-            new Table(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission,"Engine",0)), "lblEngine");
-        private readonly Table _tblTansmision =
-            new Table(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, "Transmission", 0)), "lblEngine");
+        private Car _car;
 
         public CompareCarsPage()
         {
             Assert.True(IsTruePage(_lblompareCarPage), "This is not CompareCarsPage");
         }
 
-        public Car SelectFirstCar(Car car)
+        public void SelectCar(Car car)
         {
+            _selectMake = new SelectElement(By.Id("make-dropdown"), "selectMake");
+            _selectModel = new SelectElement(By.Id("model-dropdown"), "selectModel");
+            _selectYear = new SelectElement(By.Id("year-dropdown"), "selectYear");
             _selectMake.SelectValue(car.Make);
             _selectModel.SelectValue(car.Model);
             _selectYear.SelectValue(car.Year);
-            var resultCar = new Car(_selectMake.SelectedOption(), _selectModel.SelectedOption(), _selectYear.SelectedOption());
-            _btnStartCompare.Click();
-            return resultCar;
+            _car = new Car(car.Make, car.Model, car.Year);
         }
 
-        public void AddCar(Car car)
+        public void AddSelectedCarToCompare(int numberCar)
+        {
+            if (numberCar == NumberFirstCar)
+            {
+                _btnStartCompare.Click();
+            }
+            else if (numberCar > NumberFirstCar)
+            {
+                _btnDone.Click();
+            }
+            else
+            {
+                throw new Exception("Number car can't be negative.");
+            }
+        }
+
+        public void ClickButtonAddCar()
         {
             _btnAddCar.Click();
-            SelectElement _selectMakeSecond = new SelectElement(By.Id("make-dropdown"), "selectCar");
-            SelectElement _selectModelSecond = new SelectElement(By.Id("model-dropdown"), "selectModel");
-            SelectElement _selectYearSecond = new SelectElement(By.Id("year-dropdown"), "selectYear");
-            _selectMakeSecond.SelectValue(car.Make);
-            _selectModelSecond.SelectValue(car.Model);
-            _selectYearSecond.SelectValue(car.Year);
-            _btnDone.Click();
         }
 
-        public CharacteristicsCar GetCharacteristicsFirstCar()
+        public Car GetCharacteristicstCar(int numberCar)
         {
-            var divInnerTextEngine = _tblEngine.GetInnerHtml();
-            var engine = RegexService.GetMatchString(RegularExpression, divInnerTextEngine);
-            var divInnerTextTransmission = _tblTansmision.GetInnerHtml();
-            var transmission = RegexService.GetMatchString(RegularExpression, divInnerTextTransmission);
-            var characteristicsCar = new CharacteristicsCar(engine.Replace("liter", "L"), transmission.Replace("spd", "speed"));
-            return characteristicsCar;
+            var tblEngine = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Engine, numberCar)), "Label Engine");
+            var tblTansmision = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Transmission, numberCar)), "Label Engine");
+            var divInnerTextEngine = tblEngine.GetInnerHtml();
+            var engine = GetMatchString(RegularExpression, divInnerTextEngine);
+            var divInnerTextTransmission = tblTansmision.GetInnerHtml();
+            var transmission = GetMatchString(RegularExpression, divInnerTextTransmission);
+            var characteristicsCar = new CharacteristicsCar(engine.Replace(OldValueReplace, NewValueReplace), transmission);
+            _car.CharacteristicsCar = characteristicsCar;
+            return _car;
         }
 
-        public CharacteristicsCar GetCharacteristicsSecondCar()
+        public string GetMatchString(string patternStr, string text)
         {
-            var tblEngine2 = new Table(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, "Engine", 1)), "lblEngine2");
-            var tblTansmision2 = new Table(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, "Transmission", 1)), "lblEngine2");
-            var divInnerTextEngine = tblEngine2.GetInnerHtml();
-            var engine = RegexService.GetMatchString(RegularExpression, divInnerTextEngine);
-            var divInnerTextTransmission = tblTansmision2.GetInnerHtml();
-            var transmission = RegexService.GetMatchString(RegularExpression, divInnerTextTransmission);
-            var characteristicsCar = new CharacteristicsCar(engine.Replace("liter", "L"), transmission.Replace("spd", "speed"));
-            return characteristicsCar;
+            var resultList = "";
+            foreach (Match match in Regex.Matches(text, patternStr, RegexOptions.IgnoreCase))
+            {
+                resultList += match.Groups[MatchGroup].Value;
+            }
+            return resultList;
         }
     }
 }

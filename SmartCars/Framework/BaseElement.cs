@@ -72,9 +72,17 @@ namespace Framework
 
         public void ClickAndWait()
         {
+            WaitUntilElementExists();
             WaitUntilClickable();
             Element.Click();
             Wait.Until(ExpectedConditions.StalenessOf(Element));
+        }
+
+        public void WaitElement()
+        {
+            WaitUntilElementExists();
+            WaitUntilDisplayed();
+            WaitUntilClickable();
         }
 
         public void Click()
@@ -119,6 +127,13 @@ namespace Framework
         {
             var textAttribute = Element.GetAttribute(attribute);
             return textAttribute;
+        }
+
+        public string GetInnerHtml()
+        {
+            WaitUntilDisplayed();
+            var locatorToDiscountGames = Element.GetAttribute("innerHTML");
+            return locatorToDiscountGames;
         }
     }
 }
