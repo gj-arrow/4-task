@@ -1,7 +1,8 @@
 ﻿Feature: Cars
+#Numbering cars starts from 0
 
 Scenario: ComparisonOfTwoCars
-	Given User navigate to cars.com	
+	Given User navigate to cars.com - Main page	
 		And Navigate to 'Research' page
 		And Select random car
 	When Save expected info about car
@@ -12,7 +13,8 @@ Scenario: ComparisonOfTwoCars
 	Then Expected and actual car 0 must match
 		And Save expected characteristics car 0
 
-	Given Navigate to 'Research' page
+	Given User navigate to cars.com - Main page	
+	    And Navigate to 'Research' page
 		And Select random car
 	When Save expected info about car
 		And Click Search button

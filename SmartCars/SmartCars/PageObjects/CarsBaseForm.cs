@@ -1,6 +1,5 @@
 ﻿using Framework;
 using OpenQA.Selenium;
-using SmartCars.Elements;
 
 namespace SmartCars.PageObjects
 {

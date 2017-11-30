@@ -2,14 +2,14 @@
 using Framework.Elements;
 using OpenQA.Selenium;
 
-namespace SmartCars.Elements
+namespace SmartCars.PageObjects
 {
     public class MainMenu : BasePage
     {
         private Label _lblMenuItem;
         private const string TemplateMenuLocator = "//ul[contains(@class,'global-nav__menu')]//a[contains(text(), '{0}')]";
 
-        public MainMenu(By locator, string name) : base (locator, name)
+        public MainMenu(By locator, string name) : base(locator, name)
         {
         }
 

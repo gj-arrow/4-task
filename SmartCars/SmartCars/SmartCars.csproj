@@ -61,8 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elements\CarInfoMenu.cs" />
-    <Compile Include="Elements\MainMenu.cs" />
+    <Compile Include="PageObjects\CarInfoMenu.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="Entities\CharacteristicsCar.cs" />
     <Compile Include="Features\Cars.feature.cs">
@@ -74,6 +73,7 @@
     <Compile Include="PageObjects\CarsBaseForm.cs" />
     <Compile Include="PageObjects\CompareCarsPage.cs" />
     <Compile Include="PageObjects\HomePage.cs" />
+    <Compile Include="PageObjects\MainMenu.cs" />
     <Compile Include="PageObjects\ResearchPage.cs" />
     <Compile Include="PageObjects\TrimComparisonPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

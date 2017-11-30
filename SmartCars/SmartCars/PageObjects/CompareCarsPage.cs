@@ -67,11 +67,11 @@ namespace SmartCars.PageObjects
 
         public Car GetCharacteristicstCar(int numberCar)
         {
-            var tblEngine = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Engine, numberCar)), "Label Engine");
-            var tblTansmision = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Transmission, numberCar)), "Label Engine");
-            var divInnerTextEngine = tblEngine.GetInnerHtml();
+            var elementEngine = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Engine, numberCar)), "Label Engine");
+            var elementTansmision = new BaseElement(By.XPath(string.Format(TemplateLocatorForEngineAndTransmission, Transmission, numberCar)), "Label Engine");
+            var divInnerTextEngine = elementEngine.GetInnerHtml();
             var engine = GetMatchString(RegularExpression, divInnerTextEngine);
-            var divInnerTextTransmission = tblTansmision.GetInnerHtml();
+            var divInnerTextTransmission = elementTansmision.GetInnerHtml();
             var transmission = GetMatchString(RegularExpression, divInnerTextTransmission);
             var characteristicsCar = new CharacteristicsCar(engine.Replace(OldValueReplace, NewValueReplace), transmission);
             _car.CharacteristicsCar = characteristicsCar;

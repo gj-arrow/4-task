@@ -34,7 +34,7 @@ namespace SmartCars.Step
             _browser.CloseDriver();
         }
 
-        [Given(@"User navigate to cars\.com")]
+        [Given(@"User navigate to cars\.com - Main page")]
         public void GivenUserNavigateToCars_Com()
         {
             _browser.GoToUrl(Config.Url);

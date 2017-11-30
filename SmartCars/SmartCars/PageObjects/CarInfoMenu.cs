@@ -2,7 +2,7 @@
 using Framework.Elements;
 using OpenQA.Selenium;
 
-namespace SmartCars.Elements
+namespace SmartCars.PageObjects
 {
     public class CarInfoMenu : BasePage
     {
